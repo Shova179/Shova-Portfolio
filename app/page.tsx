@@ -7,32 +7,38 @@ const projects: { title: string; image: string; gradient?: string }[] = [
   {
     title: "Mdabali Website",
     image: "/images/mdbaali.png",
+    link: "https://www.mdabali.com.np/",
   },
   {
     title: "Ru-Pay",
     image: "/images/rupay.png",
+    link: "/ru-pay",
   },
   {
     title: "Imperial Securities",
     image: "/images/imperial.png",
+    link: "https://imperialsecurities.com.np/",
   },
   {
     title: "Mdabali Mobile App",
     image: "/images/mdabaliapp.png",
+    link: "https://play.google.com/store/apps/details?id=com.infodev.mdabaliMainApp&hl=en",
   },
   {
     title: "NMB Capital",
     image: "/images/nmb.png",
+    link: "https://www.nmbcl.com.np/",
   },
   {
     title: "Danfe Hotels",
     image: "/images/danfe.png",
+    link: "https://www.danfehotels.com/",
   },
 ];
 
 export default function Home() {
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -107,6 +113,11 @@ export default function Home() {
         <div className="hero-container">
           <div className="hero-text">
             <h1>Shova Kumari Chaudhary</h1>
+            <div className="hero-designation">
+              <span>UI/UX Designer</span>
+              <span className="dot">•</span>
+              <span>Project Manager</span>
+            </div>
             <p>
               Working as a UI/UX Designer for five years, I&apos;m passionate
               about creating digital experiences that combine creativity and
@@ -142,8 +153,14 @@ export default function Home() {
           Explore my professional portfolio to gain a comprehensive insight into
           my background, skills, and accomplishments
         </p>
-        <a href="#projects" className="cta-btn">
-          View My CV
+        <a
+          href="/Shova Kumari Chaudhary CV.pdf"
+          download="Shova Kumari Chaudhary CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-btn"
+        >
+          Download CV
         </a>
       </section>
 
@@ -161,8 +178,11 @@ export default function Home() {
         </div>
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <div
+            <a
               key={project.title}
+              href={project.link || "#"}
+              target={project.link && project.link !== "#" ? "_blank" : undefined}
+              rel={project.link && project.link !== "#" ? "noopener noreferrer" : undefined}
               className="project-card"
               ref={(el) => {
                 cardRefs.current[index] = el;
@@ -181,15 +201,13 @@ export default function Home() {
                     <div className="project-card-overlay" />
                   </>
                 ) : (
-                  <div
-                    className={`gradient-placeholder ${project.gradient ?? ""}`}
-                  >
+                  <div className="gradient-placeholder">
                     {project.title}
                   </div>
                 )}
               </div>
               <div className="project-card-title">{project.title}</div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
