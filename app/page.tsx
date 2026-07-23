@@ -184,38 +184,41 @@ export default function Home() {
           <p>A Glimpse into My latest Creative Endeavors</p>
         </div>
         <div className="projects-grid">
-          {projects.map((project, index) => (
-            <a
-              key={project.title}
-              href={project.link || "#"}
-              target={project.link && project.link !== "#" ? "_blank" : undefined}
-              rel={project.link && project.link !== "#" ? "noopener noreferrer" : undefined}
-              className="project-card"
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-            >
-              <div className="project-card-image">
-                {project.image ? (
-                  <>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
-                      style={{ objectFit: "cover" }}
-                    />
-                    <div className="project-card-overlay" />
-                  </>
-                ) : (
-                  <div className="gradient-placeholder">
-                    {project.title}
-                  </div>
-                )}
-              </div>
-              <div className="project-card-title">{project.title}</div>
-            </a>
-          ))}
+          {projects.map((project, index) => {
+            const href = project.link || "#";
+            const isExternal = href.startsWith("http");
+            return (
+              <a
+                key={project.title}
+                href={href}
+                {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="project-card"
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+              >
+                <div className="project-card-image">
+                  {project.image ? (
+                    <>
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                      <div className="project-card-overlay" />
+                    </>
+                  ) : (
+                    <div className="gradient-placeholder">
+                      {project.title}
+                    </div>
+                  )}
+                </div>
+                <div className="project-card-title">{project.title}</div>
+              </a>
+            );
+          })}
         </div>
       </section>
     </>
