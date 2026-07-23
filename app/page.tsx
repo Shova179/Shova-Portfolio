@@ -3,7 +3,14 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const projects: { title: string; image: string; gradient?: string }[] = [
+interface Project {
+  title: string;
+  image: string;
+  link?: string;
+  gradient?: string;
+}
+
+const projects: Project[] = [
   {
     title: "Mdabali Website",
     image: "/images/mdbaali.png",
